@@ -1,0 +1,66 @@
+namespace:
+  name: dev
+  environment: development
+
+vote:
+  port: 80
+  namespace: dev
+  labels:
+    app: vote
+  service:
+    type: ClusterIP
+    port: 80
+    targetPort: 80
+
+result:
+  port: 80
+  namespace: dev
+  labels:
+    app: result
+  service:
+    type: ClusterIP
+    port: 80
+    targetPort: 80
+    annotations:
+      scheme: internet-facing
+
+worker:
+  namespace: dev
+  labels:
+    app: worker
+  env:
+    redisHost: redis
+    dbHost: db
+
+db:
+  namespace: dev
+  labels:
+    app: db
+  storage: 1Gi
+  storageClass: gp2
+  service:
+    port: 5432
+    targetPort: 5432
+  env:
+    user: postgres
+    password: postgres
+    pgdata: /var/lib/postgresql/data/pgdata
+
+redis:
+  namespace: dev
+  labels:
+    app: redis
+  port: 6379
+  storage: 1Gi
+  storageClass: gp2
+  service:
+    port: 6379
+    targetPort: 6379
+
+ingress:
+  namespace: dev
+  className: nginx
+  vote:
+    host: vote.3.226.86.184.nip.io
+  result:
+    host: result.3.226.86.184.nip.io

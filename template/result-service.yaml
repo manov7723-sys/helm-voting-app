@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: result
+  namespace: {{ .Values.result.namespace }}
+  labels:
+    app: {{ .Values.result.labels.app }}
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-scheme: {{ .Values.result.service.annotations.scheme }}
+spec:
+  type: {{ .Values.result.service.type }}
+  selector:
+    app: {{ .Values.result.labels.app }}
+  ports:
+    - name: result-service
+      port: {{ .Values.result.service.port }}
+      targetPort: {{ .Values.result.service.targetPort }}

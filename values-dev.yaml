@@ -1,0 +1,34 @@
+namespace:
+  name: dev
+  environment: development
+
+vote:
+  replicas: 1
+  image: dockersamples/examplevotingapp_vote
+  namespace: dev
+
+result:
+  replicas: 1
+  image: dockersamples/examplevotingapp_result
+  namespace: dev
+
+worker:
+  replicas: 1
+  image: dockersamples/examplevotingapp_worker
+  namespace: dev
+
+db:
+  replicas: 1
+  image: postgres:15-alpine
+  namespace: dev
+
+redis:
+  replicas: 1
+  image: redis:alpine
+  namespace: dev
+
+ingress:
+  vote:
+    host: vote.3.226.86.184.nip.io
+  result:
+    host: result.3.226.86.184.nip.io
